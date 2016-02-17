@@ -36,11 +36,8 @@
 			</table>
 		</div>
 	</div>
-	<div
-		style="float: right; width: 70%; height: auto; padding-top: 120px; padding-left: 30px;">
-		<span class="label"
-			style="color: black; font-stretch: ultra-condensed; font-size: x-large; font-weight: bolder; padding: 0;">ADD
-			OR EDIT CONTACT (FULL NAME)</span>
+	<div style="float: right; width: 70%; height: auto; padding-top: 120px; padding-left: 30px;">
+		<span class="form-header">ADD OR EDIT CONTACT (FULL NAME)</span>
 		<hr />
 		<div>
 			<form class="form-horizontal" role="form" name="contactForm"
@@ -48,9 +45,9 @@
 				<div class="form-group">
 					<label for="firstName" class="col-lg-6">First Name</label>
 					<div class="col-lg-6">
-						<input class="form-control input-md" id="firstName" name="firstName"
+						<input class="form-control" id="firstName" name="firstName"
 							placeholder="Enter First Name" ng-model="newcontact.firstName" required>
-							<span style="color: red" class="has-error" ng-show="submitted && contactForm.firstName.$error.required">FirstName is Required</span>
+							<span class="error-msg" ng-show="submitted && contactForm.firstName.$error.required">FirstName is Required</span>
 					</div>
 				</div>
 
@@ -66,7 +63,6 @@
 				<div class="form-group">
 					<label for="birthday" class="col-lg-6">Birth Day</label>
 					<div class="col-lg-6">
-					
 						<input class="form-control" id="birthday" placeholder="DD/MM/YYYY" name="birthday"  
 							ng-model="newcontact.birthday" required>
 							<span style="color: red" class="has-error" ng-show="submitted && contactForm.birthday.$error.required">Birthday is Required</span>
