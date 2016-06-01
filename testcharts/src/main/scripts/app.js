@@ -1,20 +1,31 @@
 'use strict';
 
-angular.module('myContactsApp',['ngCookies',
-                                    'ngResource',
-                                    'ngRoute',
-                                    'ngSanitize',
-                                    'utf8-base64',
-                                    'ui.bootstrap'])
-.config(function($routeProvider) {
-    $routeProvider
+angular.module('RetailApp', ['ngCookies',
+    'ngResource',
+    'ngRoute',
+    'ngSanitize',
+    'utf8-base64',
+    'ui.bootstrap'])
+    .config(function ($routeProvider) {
+        $routeProvider
 
-        .when('/', {
-        	templateUrl : 'views/contacts.html',
-        	controller  : 'ContactsController'
-        })
-        .otherwise({
-            redirectTo  : '/error'
-        })
+            .when('/', {
+                templateUrl: 'views/itemDetails.html',
+                controller: 'ItemDetailsController',
+                
+            })
 
-});
+            .when('/item', {
+                templateUrl: 'views/itemDetails.html',
+                controller: 'ItemDetailsController'
+            })
+
+            .when('/error', {
+                templateUrl: 'error.html',
+                controller: 'ItemDetailsController'
+            })
+            .otherwise({
+                redirectTo: '/error'
+            })
+
+    });
