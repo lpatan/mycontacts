@@ -1,0 +1,298 @@
+<div id="myModal" style="display: block" class="modal" ng-show="imgClk">
+    <div class="modal-content">
+        <span class="close" ng-click="imgClk = false">×</span>
+        <img class="modal-content-img" id="img01" src='{{primaryDataImg}}'>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="title">
+                <span>{{item.title}}</span>
+                <div><img src='{{primaryDataImg}}'/></div>
+                <button type="button" ng-click="imgClk = true" style="border:none;background-color: transparent"
+                        class="btn ">
+                    <span class="glyphicon glyphicon-zoom-in"></span> view larger
+                </button>
+                <carousel style="align:center">
+                    <slide ng-repeat="slide in item.Images[0].AlternateImages">
+                        <div>
+                            <div>
+                                <img ng-src="{{slide.image}}" ng-click="updatePrimaryImg(slide.image)"
+                                     class="img-responsive">
+                            </div>
+                            <div>
+                                <img ng-src="{{item.Images[0].AlternateImages[$index+1 > item.Images[0].AlternateImages.length-1 ? 0 : $index+1].image}}"
+                                     ng-click="updatePrimaryImg(item.Images[0].AlternateImages[$index+1 > item.Images[0].AlternateImages.length-1 ? 0 : $index+1].image)"
+                                     class="img-responsive">
+                            </div>
+                            <div>
+                                <img ng-src="{{item.Images[0].AlternateImages[$index+2 > item.Images[0].AlternateImages.length-1 ? 1 : $index+2].image}}"
+                                     ng-click="updatePrimaryImg(item.Images[0].AlternateImages[$index+2 > item.Images[0].AlternateImages.length-1 ? 0 : $index+2].image)"
+                                     class="img-responsive">
+                            </div>
+                        </div>
+                    </slide>
+                </carousel>
+            </div>
+        </div>
+
+        <div class="col-sm-6">
+            <div class="price-container">
+            <span class="price-title">
+					{{item.Offers[0].OfferPrice[0].formattedPriceValue}}
+				</span>
+                <span class="offer-title">{{item.Offers[0].OfferPrice[0].priceQualifier}}</span>
+            </div>
+
+            <div class="promo-container">
+                <i ng-repeat="promotion in item.Promotions" class="fa fa-tag fa-lg">
+                    <span class="promo-title">{{promotion.Description[0].shortDescription}}</span>
+                </i>
+            </div>
+            <div class="quantity-container">
+                quantity:
+                <div class="pull-right">
+                    <i class="fa fa-minus-circle fa-lg minus" aria-hidden="true"
+                       ng-click="quantity > 1 ?quantity=quantity-1 : quantity"
+                    ></i>
+                    {{quantity}}
+                    <i class="fa fa-plus-circle fa-lg plus" aria-hidden="true" ng-click="quantity=quantity+1"></i>
+                </div>
+            </div>
+
+            <div class="btn-group-lg padding-20">
+                <button class="btn btn-large bg-color-black">PICK UP IN STORE</button>
+                <button class="btn btn-large bg-color-red">ADD TO CART</button>
+                <span style="margin-left:90px;font-weight:bold;text-align: center">find in a Store</span>
+            </div>
+
+            <div class="row" style="padding-top: 10px;">
+            <span class="col-sm-2 returns-lbl">returns
+            </span>
+            <span class="col-sm-10" style="font-size: 11px">
+                This item must be returned within 30 dys of the ship date. See return policy for details.
+                Prices, promotions, styles and availability may vary by sore and online
+            </span>
+            </div>
+            <div class="padding-20">
+                <button class="btn btn-choice">ADD TO REGISTRY</button>
+                <button class="btn btn-choice">ADD TO LIST</button>
+                <button class="btn btn-choice">SHARE</button>
+            </div>
+            <h3>product highlights</h3>
+            <ul>
+                <li ng-repeat="highlight in item.ItemDescription[0].features">
+                    <div ng-bind-html="highlight"></div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="col-xs-6">
+            <div class="col-sm-6">
+                <div class="star-rating" star-rating rating-value="5"
+                     data-max="5" on-rating-selected="rateFunction(rating)">
+                </div>
+            </div>
+            <span><strong>overall</strong></span>
+        </div>
+        <div class="col-xs-6">
+            <strong>view all {{item.CustomerReview[0].totalReviews}} reviews</strong>
+        </div>
+
+        <div style="background-color: whitesmoke;" class="col-xs-12">
+            <div class="col-xs-12" style="border-bottom: 1px solid #e2e2e2; padding-bottom: 20px;">
+                <div class="col-xs-6">
+                    <span style="display: block">PRO</span>
+                    <span style="display: block">most helpful 4-5 star review</span>
+                </div>
+                <div class="col-xs-6">
+                    <span style="display: block">CON</span>
+                    <span style="display: block">most helpful 1-2 star review</span>
+                </div>
+            </div>
+            <div class="col-xs-6">
+                <span>
+                    <div class="star-rating" star-rating rating-value="proRating"
+                         data-max="5"></div>
+                    <h6><strong>{{item.CustomerReview[0].Pro[0].title}}{{item.CustomerReview[0].Pro[0].overallRating}}</strong></h6>
+                    <p>{{item.CustomerReview[0].Pro[0].review}}</p>
+                    <br/>
+                    <a href="javascript: void(0)" target="_blank">{{item.CustomerReview[0].Pro[0].screenName}}</a> {{proDate | date: 'mediumDate'}}
+                </span>
+            </div>
+            <div class="col-xs-6">
+                <div class="star-rating" star-rating rating-value="conRating" data-max="5"></div>
+                    <span>
+                    <h6><strong>{{item.CustomerReview[0].Con[0].title}}</strong></h6>
+                    <p>{{item.CustomerReview[0].Con[0].review}}</p>
+                    <br/>
+                    <a href="javascript: void(0)" target="_blank">{{item.CustomerReview[0].Con[0].screenName}}</a> {{conDate | date: 'mediumDate'}}
+                </span>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<!--
+	<div class="container">
+		<div class="col-md-2">
+			<div class="col-sm-6">
+				<div class="title">
+					<span>{{item.title}}</span>
+				</div>
+
+				&lt;!&ndash;<div id='carousel-custom' class='carousel slide' data-ride='carousel'>
+					<div class='carousel-outer'>
+						&lt;!&ndash; Wrapper for slides &ndash;&gt;
+						<div class='carousel-inner'>
+							<div class='item active'><img src='{{item.Images[0].PrimaryImage[0].image}}'/></div>
+							<div ng-repeat='image in item.Images[0].AlternateImages' class='item'><img src={{image.image}}/></div>
+						</div>
+
+						&lt;!&ndash; Controls &ndash;&gt;
+						<a class='left carousel-control' href='#carousel-custom' data-slide='prev'>
+							<span class='glyphicon glyphicon-chevron-left'></span>
+						</a>
+						<a class='right carousel-control' href='#carousel-custom' data-slide='next'>
+							<span class='glyphicon glyphicon-chevron-right'></span>
+						</a>
+					</div>
+
+					<ol class='carousel-indicators mCustomScrollbar'>
+						<li data-target='#carousel-custom' data-slide-to='0' class='active'><img height="42" width="42" src='{{item.Images[0].PrimaryImage[0].image}}' alt='' /></li>
+
+						<li data-target='#carousel-custom' date-slide-to='{{$index}}' ng-repeat='image in item.Images[0].AlternateImages'><img height="42" width="42" src='{{image.image}}'/></li>
+					</ol>
+				</div>&ndash;&gt;
+
+				<br><br><br>				<div class="col-12 col-md-4 col-sm-6">
+					<div class='item active'><img src='{{item.Images[0].PrimaryImage[0].image}}'/></div>
+					&lt;!&ndash;<a title="Image 1" href="#">
+						<div class='item active'><img src='{{item.Images[0].PrimaryImage[0].image}}'/></div>
+						<img class="thumbnail img-responsive" id="image-1" src='item.Images[0].PrimaryImage[0].image'>
+					</a>&ndash;&gt;
+					&lt;!&ndash;<div>
+						<div id="slides_control">
+						<carousel>
+							<slide ng-repeat="image in item.Images[0].AlternateImages" active="slide.active">
+								<img ng-src="{{image.image}}">
+								<div class="carousel-caption">
+									<h4>Slide {{$index+1}}</h4>
+								</div>
+							</slide>
+						</carousel>
+						</div>
+					</div>&ndash;&gt;
+				</div>
+
+			</div>
+			<div class="col-sm-6">
+				<b>{{item.Offers[0].OfferPrice[0].formattedPriceValue}}</b>&nbsp;<span>{{item.Offers[0].OfferPrice[0].priceQualifier}}</span>
+				<hr>
+				<h6 class="red" ng-repeat="promotion in item.Promotions"><span class="glyphicon glyphicon-tag"></span> {{promotion.Description[0].shortDescription}}</h6>
+				<hr>
+				<div>
+					quantity
+					<button class="btn btn-default" ng-click="quantity=quantity-1" ng-disabled="quantity==1">
+						<span class="glyphicon glyphicon-minus-sign"></span>
+					</button>
+					{{quantity}}
+					<button class="btn btn-default" ng-click="quantity=quantity+1">
+						<span class="glyphicon glyphicon-plus-sign"></span>
+					</button>
+				</div>
+				<br/>
+				<table id="cart-info" width="100%">
+					<tr>
+						<td>
+							<button ng-if="item.purchasingChannelCode == 0 || item.purchasingChannelCode == 2" class="btn btn-blk">PICK UP IN STORE</button>
+						</td>
+						<td>
+							<button ng-if="item.purchasingChannelCode == 0 || item.purchasingChannelCode == 1" class="btn btn-danger">ADD TO CART</button>
+						</td>
+					</tr>
+					<tr>
+						<td>find in a store</td>
+					</tr>
+				</table>
+				<br/>
+				<p>returns | This item must be returned within 30 dys of the ship date. See return policy for details. Prices, promotions, styles and availability may vary by sore and online.</p>
+				<br/>
+				<button class="btn">ADD TO REGISTRY</button>
+				<button class="btn">ADD TO LIST</button>
+				<button class="btn">SHARE</button>
+
+				<h3>Product Highlights</h3>
+				<ul>
+					<li ng-repeat="highlight in item.ItemDescription[0].features">
+						<div ng-bind-html="highlight"></div>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div class="container">
+		<div class="col-xs-12">
+			<div class="col-sm-6">
+
+				&lt;!&ndash;overall section&ndash;&gt;
+				<div class="col-xs-6">
+                <span>
+                    <span ng-repeat='item in getRatingArrays(item.CustomerReview[0].consolidatedOverallRating)[0]' class="glyphicon glyphicon-star red"></span><span ng-repeat='item in getRatingArrays(item.CustomerReview[0].consolidatedOverallRating)[1]' class="glyphicon glyphicon-star grey"></span>
+                    <span><strong>overall</strong></span>
+                </span>
+				</div>
+				<div class="col-xs-6" align="right">
+					<strong>view all {{item.CustomerReview[0].totalReviews}} reviews</strong>
+				</div>
+
+				<div style="background-color: whitesmoke;" class="col-xs-12">
+					&lt;!&ndash;pro con section&ndash;&gt;
+					<div class="col-xs-6">
+						<h5><strong>PRO</strong></h5>
+						most helpful 4-5 star review
+						<hr>
+					</div>
+					<div class="col-xs-6">
+						<h5><strong>CON</strong></h5>
+						most helpful 1-2 star review
+						<hr>
+					</div>
+
+					<hr/>
+					&lt;!&ndash;review section&ndash;&gt;
+					<div class="col-xs-6">
+                <span>
+                    <span ng-repeat='item in getRatingArrays(item.CustomerReview[0].Pro[0].overallRating)[0]' class="glyphicon glyphicon-star red"></span><span ng-repeat='item in getRatingArrays(item.CustomerReview[0].Pro[0].overallRating)[1]' class="glyphicon glyphicon-star grey"></span>
+                    <h6><strong>{{item.CustomerReview[0].Pro[0].title}}</strong></h6>
+                    <p>{{item.CustomerReview[0].Pro[0].review}}</p>
+                    <br/>
+                    <a href="#">{{item.CustomerReview[0].Pro[0].screenName}}</a> {{proDate | date: 'mediumDate'}}
+                </span>
+					</div>
+					<div class="col-xs-6">
+                    <span>
+                    <span ng-repeat='item in getRatingArrays(item.CustomerReview[0].Con[0].overallRating)[0]' class="glyphicon glyphicon-star red"></span><span ng-repeat='item in getRatingArrays(item.CustomerReview[0].Con[0].overallRating)[1]' class="glyphicon glyphicon-star grey"></span>
+                    <h6><strong>{{item.CustomerReview[0].Con[0].title}}</strong></h6>
+                    <p>{{item.CustomerReview[0].Con[0].review}}</p>
+                    <br/>
+                    <a href="#">{{item.CustomerReview[0].Con[0].screenName}}</a> {{conDate | date: 'mediumDate'}}
+                </span>
+					</div>
+				</div>
+
+
+			</div>
+		</div>
+	</div>
+&lt;!&ndash;
+</div>
+</body>
+</html>&ndash;&gt;-->
+<link href="styles/itemDetails.css" rel="stylesheet">
+
